@@ -6,7 +6,7 @@ The MACVLAN interface is based on the 192.168.1.224/29 portion of a 192.168.0/24
 * __MACVLAN__  192.168.1.225
 * __Pihole__   192.168.1.226
 * __Unused__   192.168.1.227 - 192.168.1.230
-* __Boadcast__ 192.168.1.231
+* __Broadcast__ 192.168.1.231
 
 There is a chance that you may need to change these ranges depending on your local network configuration.
 
