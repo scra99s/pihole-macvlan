@@ -1,0 +1,41 @@
+version: "2"
+
+networks:
+  pihole-macvlan0:
+    driver: macvlan
+    driver_opts:
+      parent: eth0
+    ipam:
+      config:
+        - subnet: 192.168.1.224/29
+          gateway: 192.168.1.1
+
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    networks:
+      pihole-macvlan0:
+        ipv4_address: 192.168.1.226
+    mac_address: 0a:de:ad:ca:fe:a0
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp"
+      - "80:80/tcp"
+      - "443:443/tcp"
+    environment:
+      TZ: "Australia/Sydney"
+      WEBPASSWORD: "iamapassword"
+      ServerIP: "192.168.1.226"
+      DNSMASQ_LISTENING: "all"
+    volumes:
+      - './etc-pihole/:/etc/pihole/'
+      - './etc-dnsmasq.d/:/etc/dnsmasq.d/'
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
+
